@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbe:messageSchema xmlns:sbe="http://fixprotocol.io/2016/sbe"
+                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                   package="com.falconstrike.jets.api.oms.codec.sbe"
+                   id="1"
+                   version="1"
+                   semanticVersion="0.1.0"
+                   description="FalconX SBE Order message API."
+                   byteOrder="littleEndian">
+    <xi:include href="common-types.xml"/>
+    <types>
+        <type name="InternalId" primitiveType="int64"/>
+        <type name="ExternalId" primitiveType="char" length="40" characterEncoding="ASCII"/>
+        <type name="Account" primitiveType="char" length="40" characterEncoding="ASCII"/>
+        <composite name="OrderRequestBody">
+            <ref name="side" type="Side"/>
+            <ref name="ordType" type="OrdType"/>
+            <ref name="symbol" type="Symbol"/>
+            <ref name="orderQty" type="Decimal"/>
+            <ref name="timeInForce" type="TimeInForce"/>
+            <ref name="price" type="Decimal"/>
+            <ref name="stopPx" type="Decimal"/>
+            <ref name="account" type="Account"/>
+        </composite>
+        <composite name="CancelReplaceBody">
+            <ref name="orderQty" type="Decimal"/>
+            <ref name="price" type="Decimal"/>
+            <ref name="stopPx" type="Decimal"/>
+        </composite>
+        <composite name="OrderState">
+            <ref name="cumQty" type="Decimal"/>
+            <ref name="avgPx" type="Decimal"/>
+            <ref name="status" type="OrdStatus"/>
+        </composite>
+    </types>
+
+    <sbe:message name="OrderRequestExt" id="2001" description="Place a new order, incoming to OMS">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="origin" id="2" type="InboundMessageOrigin"/>
+        <field name="clOrdId" id="3" type="ExternalId"/>
+        <field name="transactTime" id="4" type="EpochNanos"/>
+        <field name="sendingTime" id="5" type="EpochNanos"/>
+        <field name="requestBody" id="6" type="OrderRequestBody"/>
+        <field name="exDestination" id="7" type="Venue"/>
+        <field name="account" id="8" type="Account"/>
+    </sbe:message>
+
+    <sbe:message name="OrderRequestInt" id="2002" description="Place a new order, outgoing from OMS">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="transactTime" id="2" type="EpochNanos"/>
+        <field name="sendingTime" id="3" type="EpochNanos"/>
+        <field name="requestBody" id="4" type="OrderRequestBody"/>
+        <field name="exDestination" id="5" type="Venue"/>
+    </sbe:message>
+
+    <sbe:message name="OrderCancelRequestExt" id="2003" description="Request to cancel an order">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="origin" id="2" type="InboundMessageOrigin"/>
+        <field name="clOrdId" id="3" type="ExternalId"/>
+        <field name="origClOrdId" id="4" type="ExternalId"/>
+        <field name="transactTime" id="5" type="EpochNanos"/>
+        <field name="sendingTime" id="6" type="EpochNanos"/>
+        <field name="account" id="7" type="Account"/>
+    </sbe:message>
+
+    <sbe:message name="OrderCancelRequestInt" id="2004" description="Request to cancel an order">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="origClOrdId" id="2" type="InternalId"/>
+        <field name="transactTime" id="3" type="EpochNanos"/>
+        <field name="sendingTime" id="4" type="EpochNanos"/>
+    </sbe:message>
+
+    <sbe:message name="OrderCancelReplaceRequestExt" id="2005" description="Modify an order">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="origin" id="2" type="InboundMessageOrigin"/>
+        <field name="clOrdId" id="3" type="ExternalId"/>
+        <field name="origClOrdId" id="4" type="ExternalId"/>
+        <field name="transactTime" id="5" type="EpochNanos"/>
+        <field name="sendingTime" id="6" type="EpochNanos"/>
+        <field name="requestBody" id="7" type="CancelReplaceBody"/>
+        <field name="account" id="8" type="Account"/>
+    </sbe:message>
+
+    <sbe:message name="OrderCancelReplaceRequestInt" id="2006" description="Modify an order">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="origClOrdId" id="2" type="InternalId"/>
+        <field name="transactTime" id="3" type="EpochNanos"/>
+        <field name="sendingTime" id="4" type="EpochNanos"/>
+        <field name="requestBody" id="5" type="CancelReplaceBody"/>
+    </sbe:message>
+
+    <sbe:message name="OrderCancelRejectedExt" id="2007">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="clOrdId" id="2" type="ExternalId"/>
+        <field name="origClOrdId" id="3" type="ExternalId"/>
+        <field name="orderId" id="4" type="InternalId"/>
+        <field name="cxlRejResponseTo" id="5" type="CxlRejResponseTo"/>
+        <field name="cxlRejReason" id="6" type="CxlRejReason"/>
+        <field name="transactTime" id="7" type="EpochNanos"/>
+        <field name="sendingTime" id="8" type="EpochNanos"/>
+        <field name="account" id="9" type="Account"/>
+    </sbe:message>
+
+    <sbe:message name="OrderCancelRejectedInt" id="2008">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="origClOrdId" id="2" type="InternalId"/>
+        <field name="orderId" id="3" type="ExternalId"/>
+        <field name="cxlRejResponseTo" id="4" type="CxlRejResponseTo"/>
+        <field name="cxlRejReason" id="5" type="CxlRejReason"/>
+        <field name="transactTime" id="6" type="EpochNanos"/>
+        <field name="sendingTime" id="7" type="EpochNanos"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportTradeExt" id="2009">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="clOrdId" id="2" type="ExternalId"/>
+        <field name="orderId" id="3" type="InternalId"/>
+        <field name="lastPx" id="4" type="Decimal"/>
+        <field name="lastQty" id="5" type="Decimal"/>
+        <field name="transactTime" id="6" type="EpochNanos"/>
+        <field name="sendingTime" id="7" type="EpochNanos"/>
+        <field name="body" id="8" type="OrderRequestBody"/>
+        <field name="state" id="9" type="OrderState"/>
+        <field name="execId" id="10" type="InternalId"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportTradeInt" id="2010">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="orderId" id="2" type="ExternalId"/>
+        <field name="lastPx" id="3" type="Decimal"/>
+        <field name="lastQty" id="4" type="Decimal"/>
+        <field name="transactTime" id="5" type="EpochNanos"/>
+        <field name="sendingTime" id="6" type="EpochNanos"/>
+        <field name="body" id="7" type="OrderRequestBody"/>
+        <field name="state" id="8" type="OrderState"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportPendingUpdateExt" id="2011">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="clOrdId" id="2" type="ExternalId"/>
+        <field name="origClOrdId" id="3" type="ExternalId"/>
+        <field name="orderId" id="4" type="InternalId"/>
+        <field name="transactTime" id="5" type="EpochNanos"/>
+        <field name="sendingTime" id="6" type="EpochNanos"/>
+        <field name="body" id="7" type="OrderRequestBody"/>
+        <field name="state" id="8" type="OrderState"/>
+        <field name="execType" id="9" type="ExecType"/>
+        <field name="execId" id="10" type="InternalId"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportPendingUpdateInt" id="2012">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="origClOrdId" id="2" type="InternalId"/>
+        <field name="orderId" id="3" type="ExternalId"/>
+        <field name="transactTime" id="4" type="EpochNanos"/>
+        <field name="sendingTime" id="5" type="EpochNanos"/>
+        <field name="body" id="6" type="OrderRequestBody"/>
+        <field name="state" id="7" type="OrderState"/>
+        <field name="execType" id="8" type="ExecType"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportCanceledExt" id="2013">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="clOrdId" id="2" type="ExternalId"/>
+        <field name="origClOrdId" id="3" type="ExternalId"/>
+        <field name="orderId" id="4" type="InternalId"/>
+        <field name="transactTime" id="5" type="EpochNanos"/>
+        <field name="sendingTime" id="6" type="EpochNanos"/>
+        <field name="body" id="7" type="OrderRequestBody"/>
+        <field name="state" id="8" type="OrderState"/>
+        <field name="execType" id="9" type="ExecType"/>
+        <field name="execId" id="10" type="InternalId"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportCanceledInt" id="2014">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="origClOrdId" id="2" type="InternalId"/>
+        <field name="orderId" id="3" type="ExternalId"/>
+        <field name="transactTime" id="4" type="EpochNanos"/>
+        <field name="sendingTime" id="5" type="EpochNanos"/>
+        <field name="body" id="6" type="OrderRequestBody"/>
+        <field name="state" id="7" type="OrderState"/>
+        <field name="execType" id="8" type="ExecType"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportReplacedExt" id="2015">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="clOrdId" id="2" type="ExternalId"/>
+        <field name="origClOrdId" id="3" type="ExternalId"/>
+        <field name="orderId" id="4" type="InternalId"/>
+        <field name="transactTime" id="5" type="EpochNanos"/>
+        <field name="sendingTime" id="6" type="EpochNanos"/>
+        <field name="body" id="7" type="OrderRequestBody"/>
+        <field name="state" id="8" type="OrderState"/>
+        <field name="execType" id="9" type="ExecType"/>
+        <field name="execId" id="10" type="InternalId"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportReplacedInt" id="2016">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="origClOrdId" id="2" type="InternalId"/>
+        <field name="orderId" id="3" type="ExternalId"/>
+        <field name="transactTime" id="4" type="EpochNanos"/>
+        <field name="sendingTime" id="5" type="EpochNanos"/>
+        <field name="body" id="6" type="OrderRequestBody"/>
+        <field name="state" id="7" type="OrderState"/>
+        <field name="execType" id="8" type="ExecType"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportOtherExt" id="2017">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="clOrdId" id="2" type="ExternalId"/>
+        <field name="orderId" id="3" type="InternalId"/>
+        <field name="transactTime" id="4" type="EpochNanos"/>
+        <field name="sendingTime" id="5" type="EpochNanos"/>
+        <field name="body" id="6" type="OrderRequestBody"/>
+        <field name="state" id="7" type="OrderState"/>
+        <field name="execType" id="8" type="ExecType"/>
+        <field name="execId" id="9" type="InternalId"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportOtherInt" id="2018">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="orderId" id="2" type="ExternalId"/>
+        <field name="transactTime" id="3" type="EpochNanos"/>
+        <field name="sendingTime" id="4" type="EpochNanos"/>
+        <field name="body" id="5" type="OrderRequestBody"/>
+        <field name="state" id="6" type="OrderState"/>
+        <field name="execType" id="7" type="ExecType"/>
+    </sbe:message>
+
+    <sbe:message name="ExecutionReportRejectedExt" id="2019">
+        <field name="sessionId" id="1" type="SessionId"/>
+        <field name="clOrdId" id="2" type="ExternalId"/>
+        <field name="orderId" id="3" type="InternalId"/>
+        <field name="transactTime" id="4" type="EpochNanos"/>
+        <field name="sendingTime" id="5" type="EpochNanos"/>
+        <field name="body" id="6" type="OrderRequestBody"/>
+        <field name="rejectReason" id="7" type="RejectReason"/>
+        <field name="execId" id="8" type="InternalId"/>
+    </sbe:message>
+
+    <sbe:message name="TechnicalRejectInt" id="2020">
+        <field name="clOrdId" id="1" type="InternalId"/>
+        <field name="origin" id="2" type="TechnicalRejectRespondTo"/>
+    </sbe:message>
+
+</sbe:messageSchema>

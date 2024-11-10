@@ -1,0 +1,9 @@
+[package]
+name = "sbe_tool"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "sbe_tool"
+path = "src/main.rs"
+

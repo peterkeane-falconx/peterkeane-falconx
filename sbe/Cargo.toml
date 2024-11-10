@@ -1,0 +1,7 @@
+[package]
+name = "sbe"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sbe_mds = {package = "com_falconx_jets_api_mds_codec_sbe", git="ssh://git@github.com:22/falconxio/falconx-jets.git"}

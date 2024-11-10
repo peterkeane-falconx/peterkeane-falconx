@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Types Definitions -->
+<types>
+    <type name="EpochNanos" primitiveType="int64" description="Nanoseconds since Unix epoch."/>
+
+    <type name="EpochMillis" primitiveType="int64" description="Milliseconds since Unix epoch."/>
+
+    <type name="SessionId" primitiveType="int16" description="Unique Id for session"/>
+
+    <type name="Symbol" primitiveType="char" length="32" characterEncoding="ASCII"/>
+
+    <type name="SecurityIndex" primitiveType="int32" description="Unique Id for a security"/>
+
+    <enum name="Venue" encodingType="uint8" description="Trading Venue">
+        <validValue name="BINANCE">1</validValue>
+        <validValue name="BINANCEFUT">2</validValue>
+        <validValue name="OKX">3</validValue>
+        <validValue name="DERIBIT">4</validValue>
+    </enum>
+
+    <enum encodingType="char" name="Side">
+        <validValue name="BUY">1</validValue>
+        <validValue name="SELL">2</validValue>
+        <validValue name="BUY_MINUS">3</validValue>
+        <validValue name="SELL_PLUS">4</validValue>
+        <validValue name="SELL_SHORT">5</validValue>
+    </enum>
+
+    <enum encodingType="char" name="OrdStatus">
+        <validValue name="NEW">0</validValue>
+        <validValue name="PARTIALLY_FILLED">1</validValue>
+        <validValue name="FILLED">2</validValue>
+        <validValue name="DONE_FOR_DAY">3</validValue>
+        <validValue name="CANCELED">4</validValue>
+        <validValue name="PENDING_CANCEL">6</validValue>
+        <validValue name="STOPPED">7</validValue>
+        <validValue name="REJECTED">8</validValue>
+        <validValue name="SUSPENDED">9</validValue>
+        <validValue name="PENDING_NEW">A</validValue>
+        <validValue name="CALCULATED">B</validValue>
+        <validValue name="EXPIRED">C</validValue>
+        <validValue name="ACCEPTED_FOR_BIDDING">D</validValue>
+        <validValue name="PENDING_REPLACE">E</validValue>
+    </enum>
+
+    <enum encodingType="char" name="ExecType">
+        <validValue name="NEW">0</validValue>
+        <validValue name="DONE_FOR_DAY">3</validValue>
+        <validValue name="CANCELED">4</validValue>
+        <validValue name="REPLACED">5</validValue>
+        <validValue name="PENDING_CANCEL">6</validValue>
+        <validValue name="STOPPED">7</validValue>
+        <validValue name="REJECTED">8</validValue>
+        <validValue name="SUSPENDED">9</validValue>
+        <validValue name="PENDING_NEW">A</validValue>
+        <validValue name="CALCULATED">B</validValue>
+        <validValue name="EXPIRED">C</validValue>
+        <validValue name="RESTATED">D</validValue>
+        <validValue name="PENDING_REPLACE">E</validValue>
+        <validValue name="TRADE">F</validValue>
+        <validValue name="TRADE_CORRECT">G</validValue>
+        <validValue name="TRADE_CANCEL">H</validValue>
+        <validValue name="ORDER_STATUS">I</validValue>
+    </enum>
+
+    <enum encodingType="char" name="OrdType">
+        <validValue name="MARKET">1</validValue>
+        <validValue name="LIMIT">2</validValue>
+        <validValue name="STOP">3</validValue>
+        <validValue name="STOP_LIMIT">4</validValue>
+        <validValue name="WITH_OR_WITHOUT">6</validValue>
+        <validValue name="LIMIT_OR_BETTER">7</validValue>
+        <validValue name="LIMIT_WITH_OR_WITHOUT">8</validValue>
+        <validValue name="MARKET_IF_TOUCHED">J</validValue>
+        <validValue name="PEGGED">P</validValue>
+    </enum>
+
+    <enum encodingType="char" name="TimeInForce">
+        <validValue name="DAY">0</validValue>
+        <validValue name="GOOD_TILL_CANCEL">1</validValue>
+        <validValue name="AT_THE_OPENING">2</validValue>
+        <validValue name="IMMEDIATE_OR_CANCEL">3</validValue>
+        <validValue name="FILL_OR_KILL">4</validValue>
+        <validValue name="GOOD_TILL_CROSSING">5</validValue>
+        <validValue name="GOOD_TILL_DATE">6</validValue>
+        <validValue name="AT_THE_CLOSE">7</validValue>
+    </enum>
+
+    <enum encodingType="char" name="HandlInst">
+        <validValue name="AUTOMATED_NO_INTERVENTION">1</validValue>
+        <validValue name="AUTOMATED_INTERVENTION_OK">2</validValue>
+        <validValue name="MANUAL_ORDER">3</validValue>
+    </enum>
+
+    <enum encodingType="char" name="ExecInst">
+        <validValue name="NOT_HELD">1</validValue>
+        <validValue name="WORK">2</validValue>
+        <validValue name="GO_ALONG">3</validValue>
+        <validValue name="OVER_THE_DAY">4</validValue>
+        <validValue name="HELD">5</validValue>
+        <validValue name="PARTICIPATE_DONT_INITIATE">6</validValue>
+        <validValue name="STRICT_SCALE">7</validValue>
+        <validValue name="TRY_TO_SCALE">8</validValue>
+        <validValue name="STAY_ON_BIDSIDE">9</validValue>
+        <validValue name="STAY_ON_OFFERSIDE">0</validValue>
+        <validValue name="NO_CROSS">A</validValue>
+        <validValue name="OK_TO_CROSS">B</validValue>
+        <validValue name="CALL_FIRST">C</validValue>
+        <validValue name="PERCENT_OF_VOLUME">D</validValue>
+        <validValue name="DNI">E</validValue>
+        <validValue name="DNR">F</validValue>
+        <validValue name="AON">G</validValue>
+        <validValue name="REINSTATE_ON_SYSTEM_FAILURE">H</validValue>
+        <validValue name="INSTITUTIONS_ONLY">I</validValue>
+        <validValue name="REINSTATE_ON_TRADING_HALT">J</validValue>
+        <validValue name="CANCEL_ON_TRADING_HALT">K</validValue>
+        <validValue name="LAST_PEG">L</validValue>
+        <validValue name="MID_PRICE_PEG">M</validValue>
+        <validValue name="NON_NEGOTIABLE">N</validValue>
+        <validValue name="OPENING_PEG">O</validValue>
+        <validValue name="MARKET_PEG">P</validValue>
+        <validValue name="CANCEL_ON_SYSTEM_FAILURE">Q</validValue>
+        <validValue name="PRIMARY_PEG">R</validValue>
+        <validValue name="SUSPEND">S</validValue>
+        <validValue name="CUSTOMER_DISPLAY_INSTRUCTION">U</validValue>
+        <validValue name="NETTING">V</validValue>
+        <validValue name="PEG_TO_VWAP">W</validValue>
+        <validValue name="TRADE_ALONG">X</validValue>
+        <validValue name="TRY_TO_STOP">Y</validValue>
+        <validValue name="CANCEL_IF_NOT_BEST">Z</validValue>
+        <validValue name="TRADING_STOP_PEG">a</validValue>
+        <validValue name="STRICT_LIMIT">b</validValue>
+        <validValue name="IGNORE_PRICE_VALIDITY_CHECKS">c</validValue>
+        <validValue name="PEG_TO_LIMIT_PRICE">d</validValue>
+        <validValue name="WORK_TO_TARGET_STRATEGY">e</validValue>
+    </enum>
+
+    <enum encodingType="char" name="LastCapacity">
+        <validValue name="AGENT">1</validValue>
+        <validValue name="CROSS_AS_AGENT">2</validValue>
+        <validValue name="CROSS_AS_PRINCIPAL">3</validValue>
+        <validValue name="PRINCIPAL">4</validValue>
+    </enum>
+
+    <enum encodingType="char" name="CxlRejResponseTo">
+        <validValue name="ORDER_CANCEL_REQUEST">1</validValue>
+        <validValue name="ORDER_CANCEL_REPLACE_REQUEST">2</validValue>
+    </enum>
+
+    <enum encodingType="char" name="CxlRejReason">
+        <validValue name="TOO_LATE_TO_CANCEL">0</validValue>
+        <validValue name="UNKNOWN_ORDER">1</validValue>
+        <validValue name="BROKER_OPTION">2</validValue>
+        <validValue name="ORDER_ALREADY_PENDING_UPDATE">3</validValue>
+        <validValue name="UNABLE_TO_PROCESS_q">4</validValue>
+        <validValue name="ORIG_ORDER_MOD_TIME_INVALID">5</validValue>
+        <validValue name="DUPLICATE_CLORDID_RECEIVED">6</validValue>
+        <validValue name="OTHER">9</validValue>
+    </enum>
+
+    <enum encodingType="char" name="RejectReason">
+        <validValue name="RISK_REJECT">0</validValue>
+    </enum>
+
+    <enum encodingType="char" name="InboundMessageOrigin">
+        <validValue name="ACCEPTOR_FIX_GW">1</validValue>
+        <validValue name="REST_GW">2</validValue>
+    </enum>
+
+    <enum encodingType="char" name="TechnicalRejectRespondTo">
+        <validValue name="NEW_ORDER">1</validValue>
+        <validValue name="CANCEL_REQUEST">2</validValue>
+        <validValue name="CANCEL_REPLACE_REQUEST">3</validValue>
+    </enum>
+
+    <composite name="Decimal">
+        <type name="mantissa" primitiveType="int64"/>
+        <type name="exponent" primitiveType="int8"/>
+    </composite>
+
+    <composite name="String8" description="Variable length UTF-8 string.">
+        <type name="length" primitiveType="uint8"/>
+        <type name="data" length="0" primitiveType="uint8" characterEncoding="UTF-8"/>
+    </composite>
+
+    <composite name="messageHeader" description="Message identifiers and length of message root.">
+        <type name="blockLength" primitiveType="uint16"/>
+        <type name="templateId" primitiveType="uint16"/>
+        <type name="schemaId" primitiveType="uint16"/>
+        <type name="version" primitiveType="uint16"/>
+    </composite>
+
+    <composite name="groupSizeEncoding">
+            <type name="blockLength" primitiveType="uint16"/>
+            <type name="numInGroup" primitiveType="uint16"/>
+            <type name="numGroups" primitiveType="uint16"/>
+            <type name="numVarDataFields" primitiveType="uint16"/>
+    </composite>
+
+</types>

@@ -1,0 +1,10 @@
+[package]
+name = "com.falconstrike.jets.api_com_falconstrike_jets_api_mds_codec_sbe"
+version = "0.1.0"
+authors = ["sbetool"]
+description = "FalconX SBE Market Data message API."
+edition = "2021"
+
+[lib]
+name = "com.falconstrike.jets.api_com_falconstrike_jets_api_mds_codec_sbe"
+path = "src/lib.rs"
